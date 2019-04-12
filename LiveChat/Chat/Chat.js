@@ -132,31 +132,27 @@ export default class Chat extends React.Component {
   };
 
   render() {
-    if (this.props.isChatOn) {
+    if (this.props.isChatOn && this.state.onlineStatus) {
       return (
         <View
           animation="lightSpeedIn"
           style={styles.container}
           ref={(ref) => { this.chat = ref; }}
         >
-          {this.props.showNavigationBar &&
-          <NavigationBar chatTitle={this.props.chatTitle} closeChat={this.closeChat} />
-          }
-          <Text style={styles.status}>
-            { this.state.onlineStatus ? this.props.greeting : this.props.noAgents }
-          </Text>
           <GiftedChat
-            messages={this.state.messages}
-            renderFooter={this.renderFooter}
-            onSend={this.handleSend}
-            onInputTextChanged={this.handleInputTextChange}
-            user={this.getVisitor()}
-            {...this.props}
-          />
++          messages={this.state.messages}
++          onSend={this.handleSend}
++          user={this.getVisitor()}
++          onInputTextChanged={this.handleInputTextChange}
++          {...this.props}
++         />
         </View>
       );
-    }
-    return null;
+    } else {
++      return (
++        <Text style={styles.noAgentsOnline}>Sorry, our agents are not available right now.</Text>
++      )
+     }
   }
 }
 
@@ -171,6 +167,13 @@ Chat.propTypes = {
 };
 
 const styles = StyleSheet.create({
+  noAgentsOnline: {
++    textAlign: 'center', 
++    fontSize: 20, 
++    marginTop: 10, 
++    marginLeft: 20, 
++    marginRight: 20,
++  },
   hide: {
     width: 0,
     height: 0,
@@ -180,6 +183,7 @@ const styles = StyleSheet.create({
     width,
     height: Platform.OS === 'ios' ? height : height - height / 25,
     position: 'absolute',
+    flex: 1,
     flexDirection: 'column',
     backgroundColor: '#fff',
   },
