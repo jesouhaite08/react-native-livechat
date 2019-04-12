@@ -3,7 +3,7 @@ import { StyleSheet, Text, Dimensions, Platform } from 'react-native';
 import { View } from 'react-native-animatable';
 import PropTypes from 'prop-types';
 import { GiftedChat } from 'react-native-gifted-chat';
-import NavigationBar from './NavigationBar';
+//import NavigationBar from './NavigationBar';
 
 const { height, width } = Dimensions.get('window');
 const totalSize = num => (Math.sqrt((height * height) + (width * width)) * num) / 100;
