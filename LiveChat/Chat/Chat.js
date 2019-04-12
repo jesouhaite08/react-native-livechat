@@ -139,7 +139,9 @@ export default class Chat extends React.Component {
           style={styles.container}
           ref={(ref) => { this.chat = ref; }}
         >
+          {this.props.showNavigationBar &&
           <NavigationBar chatTitle={this.props.chatTitle} closeChat={this.closeChat} />
+          }
           <Text style={styles.status}>
             { this.state.onlineStatus ? this.props.greeting : this.props.noAgents }
           </Text>
@@ -165,6 +167,7 @@ Chat.propTypes = {
   isChatOn: PropTypes.bool.isRequired,
   greeting: PropTypes.string.isRequired,
   noAgents: PropTypes.string.isRequired,
+  showNavigationBar: PropTypes.bool.isRequired,
 };
 
 const styles = StyleSheet.create({
