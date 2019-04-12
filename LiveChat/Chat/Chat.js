@@ -1,10 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, Dimensions, Platform } from 'react-native';
-import { init } from '@livechat/livechat-visitor-sdk';
 import { View } from 'react-native-animatable';
 import PropTypes from 'prop-types';
 import { GiftedChat } from 'react-native-gifted-chat';
-import NavigationBar from './NavigationBar/NavigationBar';
+import NavigationBar from './NavigationBar';
 
 const { height, width } = Dimensions.get('window');
 const totalSize = num => (Math.sqrt((height * height) + (width * width)) * num) / 100;
@@ -135,38 +134,31 @@ export default class Chat extends React.Component {
     if (this.props.isChatOn && this.state.onlineStatus) {
       return (
         <GiftedChat
-+        messages={this.state.messages}
-         renderFooter={this.renderFooter}
-+        onSend={this.handleSend}
-+        user={this.getVisitor()}
-+        onInputTextChanged={this.handleInputTextChange}
-+        {...this.props}
-+       />
+          messages={this.state.messages}
+          renderFooter={this.renderFooter}
+          onSend={this.handleSend}
+          onInputTextChanged={this.handleInputTextChange}
+          user={this.getVisitor()}
+          {...this.props}
+        />
       );
     } else {
-+      return <Text style={styles.noAgentsOnline}>Sorry, our agents are not available right now.</Text>
+      return <Text style={styles.status}>{ this.props.noAgents }</Text>
     }
+    return null;
   }
 }
 
 Chat.propTypes = {
-  license: PropTypes.number.isRequired,
+  license: PropTypes.string.isRequired,
   chatTitle: PropTypes.string.isRequired,
   closeChat: PropTypes.func.isRequired,
   isChatOn: PropTypes.bool.isRequired,
   greeting: PropTypes.string.isRequired,
   noAgents: PropTypes.string.isRequired,
-  showNavigationBar: PropTypes.bool.isRequired,
 };
 
 const styles = StyleSheet.create({
-  noAgentsOnline: {
-+    textAlign: 'center', 
-+    fontSize: 20, 
-+    marginTop: 10, 
-+    marginLeft: 20, 
-+    marginRight: 20,
-+  },
   hide: {
     width: 0,
     height: 0,
@@ -176,7 +168,8 @@ const styles = StyleSheet.create({
     width,
     height: Platform.OS === 'ios' ? height : height - height / 25,
     position: 'absolute',
-    flex: 1,
+    top: 0,
+    left: 0,
     flexDirection: 'column',
     backgroundColor: '#fff',
   },
@@ -202,6 +195,6 @@ const styles = StyleSheet.create({
     fontSize: totalSize(2.1),
     fontWeight: '500',
     color: '#444',
-    padding: 5,
+    paddingTop: 25,
   },
 });
