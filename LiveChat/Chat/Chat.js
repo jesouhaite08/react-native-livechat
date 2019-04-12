@@ -141,6 +141,7 @@ export default class Chat extends React.Component {
         >
           <GiftedChat
 +          messages={this.state.messages}
+           renderFooter={this.renderFooter}
 +          onSend={this.handleSend}
 +          user={this.getVisitor()}
 +          onInputTextChanged={this.handleInputTextChange}
