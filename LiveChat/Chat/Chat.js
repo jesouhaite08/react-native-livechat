@@ -134,26 +134,18 @@ export default class Chat extends React.Component {
   render() {
     if (this.props.isChatOn && this.state.onlineStatus) {
       return (
-        <View
-          animation="lightSpeedIn"
-          style={styles.container}
-          ref={(ref) => { this.chat = ref; }}
-        >
-          <GiftedChat
-+          messages={this.state.messages}
-           renderFooter={this.renderFooter}
-+          onSend={this.handleSend}
-+          user={this.getVisitor()}
-+          onInputTextChanged={this.handleInputTextChange}
-+          {...this.props}
-+         />
-        </View>
+        <GiftedChat
++        messages={this.state.messages}
+         renderFooter={this.renderFooter}
++        onSend={this.handleSend}
++        user={this.getVisitor()}
++        onInputTextChanged={this.handleInputTextChange}
++        {...this.props}
++       />
       );
     } else {
-+      return (
-+        <Text style={styles.noAgentsOnline}>Sorry, our agents are not available right now.</Text>
-+      )
-     }
++      return <Text style={styles.noAgentsOnline}>Sorry, our agents are not available right now.</Text>
+    }
   }
 }
 
